@@ -211,29 +211,9 @@ Under development. Relevant preliminary results in https://rpubs.com/chwilson101
 
 
 
+# Application to Human Population Growth 
 
-
-```{r, eval = F, echo = F}
-
-NYdat <- read.csv("SAR2_NY_early.csv")
-
-
-p1 <- ggplot(NYdat, aes(x=Date,y=10^4*(cases/population),group=County.x)) + geom_point() + geom_line() + ylab("") + xlab("") + theme_bw(base_size=14) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Covid-19 Cases per 10K")
-
-NYdat2 <- NYdat %>% group_by(Date) %>% summarize(SARS2 = sum(10^4*(cases/population),na.rm=T))
-
-ggplot(NYdat2, aes(x=Date,y=SARS2)) + geom_point() + geom_line() + ylab("") + xlab("") + theme_bw(base_size=14) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ggtitle("Covid-19 Cases per 10K")
-
-str(NYdat2)
-NYdat2$time <- seq(1,nrow(NYdat2),1)
-write.csv(NYdat2,"SARS2_NY_earlySUM.csv")
-
-?nls
-nls1 <- nls(SARS2 ~ (beta/(beta-time))^alpha, 
-            start = list(beta = 1, alpha = 1),
-            data= NYdat2)
-
-```
+Not super convincing. Decent deviations from the World Population time series. Interestingly, appears to be insufficiently convex for the portions starting around 1500 but then is too convex for the most recent 50 years. 
 
 
 
